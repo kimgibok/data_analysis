@@ -1,9 +1,15 @@
 import streamlit as st
 import pandas as pd
 from streamlit_folium import st_folium
+import matplotlib.pyplot as plt
 import folium
 import json
 import time
+import seaborn as sns
+from matplotlib.cm import get_cmap
+
+# Get the 'tab10' colormap
+tab10 = get_cmap('tab10')
 
 # data load
 @st.cache_data
@@ -34,13 +40,32 @@ def play_type():
     
     
     
-def age():
-    st.title("연령별")
-    
-    
+def runtime():
+    st.title("러닝타임별")
+    # 데이터프레임(data)의 '시간' 열에서 값의 빈도를 계산하여 Series로 반환합니다.
+    b = data['시간'].value_counts()
+
+# 시간 값의 형식을 변환합니다. (예: '90분' -> 90)
+    b.index = b.index.str.replace('분', '').astype(int)
+
+    # 시간을 50을 기준으로 묶습니다.
+    b_grouped = b.groupby(pd.cut(b.index, bins=range(0, max(b.index) + 30, 30))).sum()
+
+    # 색상 설정
+    colors = [tab10.colors[i % 10] for i in range(len(b_grouped))]
+
+    # 그래프 그리기
+    fig, ax = plt.subplots()
+    ax.set_title('running time')  # 그래프 제목 설정
+    ax.set_xlabel('Running Time (minutes)')  # x축 레이블 설정
+    ax.set_ylabel('Number of Performances')  # y축 레이블 설정
+    ax.bar(b_grouped.index.astype(str), b_grouped, color=colors)
+    plt.xticks(range(0, len(b_grouped.index), 2), [str(i.right) for i in b_grouped.index][::2])  # 2 단위로 레이블 표시
+    st.pyplot(fig)
+
     
 def sido():
-    st.title("공연 극장 분포")
+    st.title("지역별 공연 극장 분포")
     st.markdown("---") 
     # 전국데이터
     data
