@@ -29,8 +29,8 @@ def home():
     st.write_stream(stream_data(txt))
     
     
-def period():
-    st.title("시기별")
+def play_type():
+    st.title("종류별")
     
     
     
@@ -89,5 +89,6 @@ def sido():
         bins=[10**i for i in range(5)]  # 값의 격차가 너무 커 로그스케일로 조절
     )
     choropleth.geojson.add_to(map)
+    
 
     st_map = st_folium(map, width=600, height=700)
