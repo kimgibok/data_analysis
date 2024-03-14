@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 import folium
 import json
 import time
-import seaborn as sns
 from matplotlib.cm import get_cmap
 
 # Get the 'tab10' colormap
@@ -36,13 +35,51 @@ def home():
     
     
 def play_type():
-    st.title("종류별")
+    df = pd.DataFrame(data)
+    
+    # 한국어가 깨져서 영어로 바꿔줌
+    df['문화종류'] = df['문화종류'].map({'연극': 'Play', '어린이/가족': 'Kids/Family', '퍼포먼스': 'Performance'})
+    
+    # '문화종류' 열의 값 별 빈도수 계산 후 데이터프레임으로 변환
+    df_count = df['문화종류'].value_counts().reset_index()
+    df_count.columns = ['문화종류', '빈도']
+
+    # 시각화 함수 정의
+    def plot_bar_chart(df):
+        fig, ax = plt.subplots()
+        ax.bar(df['문화종류'], df['빈도'], color=['turquoise', 'limegreen', 'gold', 'hotpink', 'cyan'])
+        ax.set_xlabel('Culture Type')
+        ax.set_ylabel('Frequency')
+        ax.set_title('Frequency of Culture Types (Bar Chart)')
+        st.pyplot(fig)
+
+    def plot_pie_chart(df):
+        fig, ax = plt.subplots()
+        ax.pie(df['빈도'], labels=df['문화종류'], autopct='%1.1f%%')
+        ax.set_title('Frequency of Culture Types (Pie Chart)')
+        st.pyplot(fig)
+
+    # 스트림릿 앱 생성
+    st.title('장르별 데이터 빈도 시각화')
+    st.write('막대 그래프와 원 그래프로 데이터를 시각화합니다.')
+    st.divider()
+
+    # 시각화 선택
+    visualization_option = st.selectbox('시각화 종류 선택', ['막대 그래프', '원 그래프'])
+
+    # 선택에 따라 시각화
+    if visualization_option == '막대 그래프':
+        plot_bar_chart(df_count)
+    elif visualization_option == '원 그래프':
+        plot_pie_chart(df_count)
     
     
     
 def runtime():
-    st.title("러닝타임별")
-    # 데이터프레임(data)의 '시간' 열에서 값의 빈도를 계산하여 Series로 반환합니다.
+    st.title("러닝타임별 데이터 빈도 시각화")
+    st.write('막대 그래프로 데이터를 시각화합니다.')
+    st.divider()
+    # 데이터프레임(data)의 '시간' 열에서 값의 빈도
     b = data['시간'].value_counts()
 
 # 시간 값의 형식을 변환합니다. (예: '90분' -> 90)
