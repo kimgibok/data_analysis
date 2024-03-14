@@ -44,7 +44,7 @@ def play_type():
     df_count = df['문화종류'].value_counts().reset_index()
     df_count.columns = ['문화종류', '빈도']
 
-    # 시각화 함수 정의
+    # 시각화 함수(막대, 원그래프)
     def plot_bar_chart(df):
         fig, ax = plt.subplots()
         ax.bar(df['문화종류'], df['빈도'], color=['turquoise', 'limegreen', 'gold', 'hotpink', 'cyan'])
@@ -59,12 +59,12 @@ def play_type():
         ax.set_title('Frequency of Culture Types (Pie Chart)')
         st.pyplot(fig)
 
-    # 스트림릿 앱 생성
+    # 인터페이스
     st.title('장르별 데이터 빈도 시각화')
     st.write('막대 그래프와 원 그래프로 데이터를 시각화합니다.')
     st.divider()
 
-    # 시각화 선택
+    # 시각화 종류 선택
     visualization_option = st.selectbox('시각화 종류 선택', ['막대 그래프', '원 그래프'])
 
     # 선택에 따라 시각화
@@ -82,10 +82,10 @@ def runtime():
     # 데이터프레임(data)의 '시간' 열에서 값의 빈도
     b = data['시간'].value_counts()
 
-# 시간 값의 형식을 변환합니다. (예: '90분' -> 90)
+    # '90분' -> 90
     b.index = b.index.str.replace('분', '').astype(int)
 
-    # 시간을 50을 기준으로 묶습니다.
+    # 30기준으로 묶기
     b_grouped = b.groupby(pd.cut(b.index, bins=range(0, max(b.index) + 30, 30))).sum()
 
     # 색상 설정
