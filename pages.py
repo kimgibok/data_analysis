@@ -6,6 +6,7 @@ import folium
 import json
 import time
 from matplotlib.cm import get_cmap
+import seaborn as sns
 
 # Get the 'tab10' colormap
 tab10 = get_cmap('tab10')
@@ -61,7 +62,7 @@ def play_type():
 
     # 인터페이스
     st.title('장르별 데이터 빈도 시각화')
-    st.write('막대 그래프와 원 그래프로 데이터를 시각화합니다.')
+    st.write('막대 그래프, 원 그래프로 데이터를 시각화합니다.')
     st.divider()
 
     # 시각화 종류 선택
@@ -98,6 +99,8 @@ def runtime():
     ax.set_ylabel('Number of Performances')  # y축 레이블 설정
     ax.bar(b_grouped.index.astype(str), b_grouped, color=colors)
     plt.xticks(range(0, len(b_grouped.index), 2), [str(i.right) for i in b_grouped.index][::2])  # 2 단위로 레이블 표시
+
+    
     st.pyplot(fig)
 
     
