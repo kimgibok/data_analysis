@@ -170,7 +170,7 @@ def contact_us():
     st.divider()
     st.subheader("문의사항이나 요청할 데이터가 있다면 알려주세요.:wink:")
 
-    # 일정 추가 입력 폼
+    # 문의사항 입력 폼
     with st.form("contact_us"):
         email = st.text_input("답변을 받을 이메일을 입력해주세요")
         request = st.text_input("문의사항을 입력해주세요")
