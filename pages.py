@@ -25,7 +25,7 @@ def stream_data(data):
         time.sleep(0.1)
 
 def home():
-    st.title("전국 연극장 및 소극장 데이터 분석")
+    st.title("전국 연극장 및 소극장 데이터 분석	:bar_chart:")
     st.divider()
     st.dataframe(data, width=700, height=400)
     APP_SUB_TITLE = '전국 연극장 및 소극장 데이터_20221130.CSV'
@@ -61,7 +61,7 @@ def play_type():
         st.pyplot(fig)
 
     # 인터페이스
-    st.title('장르별 데이터 빈도 시각화')
+    st.title(':bar_chart:장르별 데이터 빈도 시각화')
     st.write('막대 그래프, 원 그래프로 데이터를 시각화합니다.')
     st.divider()
 
@@ -77,7 +77,7 @@ def play_type():
     
     
 def runtime():
-    st.title("러닝타임별 데이터 빈도 시각화")
+    st.title(":bar_chart:러닝타임별 데이터 빈도 시각화")
     st.write('막대 그래프로 데이터를 시각화합니다.')
     st.divider()
     # 데이터프레임(data)의 '시간' 열에서 값의 빈도
@@ -105,8 +105,8 @@ def runtime():
 
     
 def sido():
-    st.title("지역별 공연 극장 분포")
-    st.markdown("---") 
+    st.title(":world_map:지역별 공연 극장 분포")
+    st.divider() 
     # 전국데이터
     data
     # 서울데이터
@@ -157,3 +157,24 @@ def sido():
     
 
     st_map = st_folium(map, width=600, height=700)
+
+def contact_us():
+    # 파일에 문의사항 추가
+    def add_schedule_to_file(email, request):
+        with open("contact.txt", "a") as file:
+            file.write(f"{email}: {request}\n")
+            
+
+    # 인터페이스
+    st.title(":telephone_receiver: contact us")
+    st.divider()
+    st.subheader("문의사항이나 요청할 데이터가 있다면 알려주세요.:wink:")
+
+    # 일정 추가 입력 폼
+    with st.form("schedule_form"):
+        email = st.text_input("답변을 받을 이메일을 입력해주세요")
+        request = st.text_input("문의사항을 입력해주세요")
+        submit_button = st.form_submit_button("submit")
+        if submit_button and email and request:
+            add_schedule_to_file(email, request)
+            st.success(f"{email}로 답변드리겠습니다. 감사합니다.:smile:")

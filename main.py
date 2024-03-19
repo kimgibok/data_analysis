@@ -9,7 +9,7 @@ from pages import *
 if 'page' not in st.session_state:
     st.session_state['page'] = 'HOME'
 
-menus={'HOME':home, '장르별':play_type,'러닝타임별':runtime, '지역별':sido}
+menus={'HOME':home, '장르별':play_type,'러닝타임별':runtime, '지역별':sido, 'contact us':contact_us}
 
 with st.sidebar:
     for menu in menus.keys():
