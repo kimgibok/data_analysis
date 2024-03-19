@@ -160,7 +160,7 @@ def sido():
 
 def contact_us():
     # 파일에 문의사항 추가
-    def add_schedule_to_file(email, request):
+    def add_request_to_file(email, request):
         with open("contact.txt", "a") as file:
             file.write(f"{email}: {request}\n")
             
@@ -171,10 +171,10 @@ def contact_us():
     st.subheader("문의사항이나 요청할 데이터가 있다면 알려주세요.:wink:")
 
     # 일정 추가 입력 폼
-    with st.form("schedule_form"):
+    with st.form("contact_us"):
         email = st.text_input("답변을 받을 이메일을 입력해주세요")
         request = st.text_input("문의사항을 입력해주세요")
         submit_button = st.form_submit_button("submit")
         if submit_button and email and request:
-            add_schedule_to_file(email, request)
+            add_request_to_file(email, request)
             st.success(f"{email}로 답변드리겠습니다. 감사합니다.:smile:")
